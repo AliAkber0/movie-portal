@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HomeContainer } from "./views/Home";
+import "./App.css";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#032541",
+      gradientColor:
+        "linear-gradient(to right, rgba(30,213,169, 1) 0%, rgba(1,180,228, 1) 100%)",
+    },
+  },
+  typography: {
+    fontFamily: ["Source Sans Pro", "cursive"].join(","),
+    fontSize: 16,
+  },
+});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomeContainer />} />
+          <Route
+            path="*"
+            element={<div className="not-found">Page Not Found</div>}
+          />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 
