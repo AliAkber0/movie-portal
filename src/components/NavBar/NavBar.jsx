@@ -20,6 +20,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import { ReactComponent as Logo } from "../../assets/SVG/logo.svg";
 import { ReactComponent as MobileLogo } from "../../assets/SVG/logoMobile.svg";
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = "75vw";
 
@@ -44,10 +45,16 @@ const DrawerAppBar = (props) => {
   const [collapseListToOpen, setCollapseListToOpen] = React.useState("none");
   const trigger = useScrollTrigger();
   const isMobileView = useMediaQuery("(max-width:900px)");
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     resetAllMenuState();
   }, [isMobileView]);
+
+  const navigateTo = (pathname) => {
+    console.log(pathname);
+    navigate(pathname);
+  };
 
   const menuToggleHandler = (menuToHandle) => {
     if (menuToHandle === "movies") {
@@ -67,14 +74,28 @@ const DrawerAppBar = (props) => {
     if (menuToHandle === "movies") {
       if (!mobileOpen) {
         return navMoviesMenuItem.map((movieItem) => (
-          <MenuItem /* onClick={handleClose} */ key={movieItem}>
+          <MenuItem
+            onClick={() =>
+              navigateTo(
+                `/movie/${getItemWithoutSpacesAndLowerCase(movieItem)}`
+              )
+            }
+            key={movieItem}
+          >
             {movieItem}
           </MenuItem>
         ));
       }
       return navMoviesMenuItem.map((movieItem) => (
         <List key={movieItem} component="div" disablePadding>
-          <ListItemButton sx={{ ...listItemButtonSx, pl: 4 }}>
+          <ListItemButton
+            sx={{ ...listItemButtonSx, pl: 4 }}
+            onClick={() =>
+              navigateTo(
+                `/movie/${getItemWithoutSpacesAndLowerCase(movieItem)}`
+              )
+            }
+          >
             <ListItemText
               primary={movieItem}
               sx={{
@@ -88,14 +109,28 @@ const DrawerAppBar = (props) => {
     } else if (menuToHandle === "tvshows") {
       if (!mobileOpen) {
         return navTvShowsMenuItem.map((tvShowItem) => (
-          <MenuItem /* onClick={handleClose} */ key={tvShowItem}>
+          <MenuItem
+            onClick={() =>
+              navigateTo(
+                `/movie/${getItemWithoutSpacesAndLowerCase(tvShowItem)}`
+              )
+            }
+            key={tvShowItem}
+          >
             {tvShowItem}
           </MenuItem>
         ));
       }
       return navTvShowsMenuItem.map((tvShowItem) => (
         <List key={tvShowItem} component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton
+            sx={{ pl: 4 }}
+            onClick={() =>
+              navigateTo(
+                `/movie/${getItemWithoutSpacesAndLowerCase(tvShowItem)}`
+              )
+            }
+          >
             <ListItemText
               primary={tvShowItem}
               sx={{ ...listItemTextColorSx, fontSize: "14px" }}
@@ -106,14 +141,28 @@ const DrawerAppBar = (props) => {
     } else if (menuToHandle === "people") {
       if (!mobileOpen) {
         return navPeopleMenuItem.map((peopleItem) => (
-          <MenuItem /* onClick={handleClose} */ key={peopleItem}>
+          <MenuItem
+            onClick={() =>
+              navigateTo(
+                `/movie/${getItemWithoutSpacesAndLowerCase(peopleItem)}`
+              )
+            }
+            key={peopleItem}
+          >
             {peopleItem}
           </MenuItem>
         ));
       }
       return navPeopleMenuItem.map((peopleItem) => (
         <List key={peopleItem} component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton
+            sx={{ pl: 4 }}
+            onClick={() =>
+              navigateTo(
+                `/movie/${getItemWithoutSpacesAndLowerCase(peopleItem)}`
+              )
+            }
+          >
             <ListItemText
               primary={peopleItem}
               sx={{ ...listItemTextColorSx, fontSize: "14px" }}
@@ -197,11 +246,13 @@ const DrawerAppBar = (props) => {
             </IconButton>
             <Box display="flex" flex="1" />
 
-            {isMobileView ? (
-              <MobileLogo height="40px" />
-            ) : (
-              <Logo height="30px" width="140px" />
-            )}
+            <Box sx={{ cursor: "pointer" }} onClick={() => navigateTo("/")}>
+              {isMobileView ? (
+                <MobileLogo height="40px" />
+              ) : (
+                <Logo height="30px" width="140px" />
+              )}
+            </Box>
             <Box
               flex="4"
               alignItems="center"

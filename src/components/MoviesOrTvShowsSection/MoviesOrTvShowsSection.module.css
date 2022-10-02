@@ -1,0 +1,9 @@
+@media screen and (max-width: 900px) {
+    .hideScrollBarView {
+        -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        scrollbar-width: none; 
+    }
+    .hideScrollBarView::-webkit-scrollbar { 
+        display: none;  /* Safari and Chrome */
+    }
+  }

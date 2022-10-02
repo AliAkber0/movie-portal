@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { ReactComponent as Logo } from "../../assets/SVG/logoMobile.svg";
 
 const TypographyHeadingSx = { fontWeight: "bold" };
@@ -7,7 +7,8 @@ const TypographyColorSx = { color: "white" };
 const TypographyHeadingFontSizeSx = { fontSize: "20px" };
 const TypographyHoverSx = { "&:hover": { cursor: "pointer" } };
 
-const Footer = ({ isMobileView }) => {
+const Footer = () => {
+  const isMobileView = useMediaQuery("(max-width:900px)");
   const theme = useTheme();
 
   const linkOnClickHandler = (url) => {
