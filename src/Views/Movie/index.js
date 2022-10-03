@@ -1,1 +1,2 @@
-export { default as MovieContainer } from "./Movie.container";
+import Movies from "./Movie.container";
+export default Movies;

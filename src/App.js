@@ -2,9 +2,10 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HomeContainer } from "./Views/Home";
 import "./App.css";
-import { MovieContainer } from "./Views/Movie";
+import Movie from "./Views/Movie";
 import { TVContainer } from "./Views/TV";
 import { PeopleContainer } from "./Views/People";
+import DetailContainer from "./Views/Detail/Detail.container";
 
 const theme = createTheme({
   palette: {
@@ -26,7 +27,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomeContainer />} />
-          <Route path="/movie/:tag" element={<MovieContainer />} />
+          <Route path="/detail/:tag/:id" element={<DetailContainer />} />
+          <Route path="/movie/:tag" element={<Movie />} />
           <Route path="/tv/:tag" element={<TVContainer />} />
           <Route path="/people/:tag" element={<PeopleContainer />} />
           <Route

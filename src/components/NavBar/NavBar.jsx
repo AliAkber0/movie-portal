@@ -90,11 +90,12 @@ const DrawerAppBar = (props) => {
         <List key={movieItem} component="div" disablePadding>
           <ListItemButton
             sx={{ ...listItemButtonSx, pl: 4 }}
-            onClick={() =>
+            onClick={() => {
+              handleDrawerToggle();
               navigateTo(
                 `/movie/${getItemWithoutSpacesAndLowerCase(movieItem)}`
-              )
-            }
+              );
+            }}
           >
             <ListItemText
               primary={movieItem}
@@ -111,9 +112,7 @@ const DrawerAppBar = (props) => {
         return navTvShowsMenuItem.map((tvShowItem) => (
           <MenuItem
             onClick={() =>
-              navigateTo(
-                `/movie/${getItemWithoutSpacesAndLowerCase(tvShowItem)}`
-              )
+              navigateTo(`/tv/${getItemWithoutSpacesAndLowerCase(tvShowItem)}`)
             }
             key={tvShowItem}
           >
@@ -125,11 +124,10 @@ const DrawerAppBar = (props) => {
         <List key={tvShowItem} component="div" disablePadding>
           <ListItemButton
             sx={{ pl: 4 }}
-            onClick={() =>
-              navigateTo(
-                `/movie/${getItemWithoutSpacesAndLowerCase(tvShowItem)}`
-              )
-            }
+            onClick={() => {
+              handleDrawerToggle();
+              navigateTo(`/tv/${getItemWithoutSpacesAndLowerCase(tvShowItem)}`);
+            }}
           >
             <ListItemText
               primary={tvShowItem}
@@ -144,7 +142,7 @@ const DrawerAppBar = (props) => {
           <MenuItem
             onClick={() =>
               navigateTo(
-                `/movie/${getItemWithoutSpacesAndLowerCase(peopleItem)}`
+                `/people/${getItemWithoutSpacesAndLowerCase(peopleItem)}`
               )
             }
             key={peopleItem}
@@ -157,11 +155,12 @@ const DrawerAppBar = (props) => {
         <List key={peopleItem} component="div" disablePadding>
           <ListItemButton
             sx={{ pl: 4 }}
-            onClick={() =>
+            onClick={() => {
+              handleDrawerToggle();
               navigateTo(
-                `/movie/${getItemWithoutSpacesAndLowerCase(peopleItem)}`
-              )
-            }
+                `/people/${getItemWithoutSpacesAndLowerCase(peopleItem)}`
+              );
+            }}
           >
             <ListItemText
               primary={peopleItem}
