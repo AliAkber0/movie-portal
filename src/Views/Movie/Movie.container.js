@@ -22,8 +22,9 @@ import Movies from "./Movie";
 import { getAllMovies } from "../../store/selectors/movies.selectors";
 
 const mapStateToProps = (state) => {
-  const movies = getAllMovies(state);
-  return movies;
+  return {
+    movies: getAllMovies(state),
+  };
 };
 
 const mapDispatchToProps = {};

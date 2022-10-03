@@ -1,6 +1,6 @@
 import { fromJS } from "immutable";
 
-const tvShowsInitialState = fromJS({});
+const tvShowsInitialState = fromJS({ data: [], error: "" });
 
 const tvShowsReducer = (state = tvShowsInitialState, action) => {
   switch (action.type) {

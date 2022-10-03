@@ -1,6 +1,6 @@
 import { fromJS } from "immutable";
 
-const moviesInitialState = fromJS({});
+const moviesInitialState = fromJS({ data: [], error: "" });
 
 const moviesReducer = (state = moviesInitialState, action) => {
   switch (action.type) {

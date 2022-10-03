@@ -1,6 +1,6 @@
 import { fromJS } from "immutable";
 
-const peopleInitialState = fromJS({});
+const peopleInitialState = fromJS({ data: [], error: "" });
 
 const peopleReducer = (state = peopleInitialState, action) => {
   switch (action.type) {
