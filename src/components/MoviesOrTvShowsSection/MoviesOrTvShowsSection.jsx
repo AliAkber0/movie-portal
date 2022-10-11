@@ -67,7 +67,7 @@ const MoviesOrTvShowsSection = (props) => {
         )}
         {!loadingData &&
           !dataPopularOrTrending?.error &&
-          dataPopularOrTrending?.data?.map((data, index) => (
+          dataPopularOrTrending?.data?.slice(0, 19).map((data, index) => (
             <Box paddingX="10px" key={`${index}`}>
               <CardComponent
                 isViewOnHome={true}
