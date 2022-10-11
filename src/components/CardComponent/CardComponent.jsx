@@ -5,15 +5,18 @@ import {
   CardMedia,
   CardContent,
   Typography,
-  CircularProgress,
-  useTheme,
 } from "@mui/material";
 import React from "react";
+import moment from "moment/moment";
+
+import { CircularGraphComponent } from "../CircularGraphComponent";
 
 const cardBoxShadowNoneSx = { boxShadow: "none" };
-const CardComponent = ({ isViewOnHome }) => {
-  const theme = useTheme();
-  const rating = 70;
+
+const CardComponent = (props) => {
+  const { isViewOnHome, data, titleCategory, navigateTo } = props;
+
+  let rating = data?.["vote_average"] * 10;
 
   const getColorBasedOnTheRatingValue = () => {
     if (rating >= 70) {
@@ -28,11 +31,16 @@ const CardComponent = ({ isViewOnHome }) => {
   };
 
   const getRatingInPercentage = () => {
-    return rating ? `${Math.round(rating)}%` : "NR";
+    return rating > 0 ? `${Math.round(rating)}%` : "NR";
   };
 
   return (
-    <Box mt="1em" mb="1em">
+    <Box
+      mt="1em"
+      mb="1em"
+      onClick={() => navigateTo(titleCategory, data?.id)}
+      sx={{ "&:hover": { cursor: "pointer" } }}
+    >
       <Card
         sx={{
           width: isViewOnHome ? 180 : "auto",
@@ -44,7 +52,9 @@ const CardComponent = ({ isViewOnHome }) => {
             <CardMedia
               sx={{ maxHeight: "225px" }}
               component="img"
-              image="https://www.themoviedb.org/t/p/w220_and_h330_face/suyNxglk17Cpk8rCM2kZgqKdftk.jpg"
+              image={`https://www.themoviedb.org/t/p/w220_and_h330_face${
+                data?.["poster_path"] || "/h1pLOZATBr7oVDrwj3DfOjTOCGk.jpg"
+              }`}
               alt="movie-image"
             />
             <Box
@@ -52,43 +62,15 @@ const CardComponent = ({ isViewOnHome }) => {
               bottom={isViewOnHome ? "-20px" : "-20px"}
               left="10px"
             >
-              <Box
-                sx={{ position: "relative", display: "inline-flex" }}
-                borderRadius="25px"
-                backgroundColor={theme.palette.primary.main}
-              >
-                <CircularProgress
-                  size="35px"
-                  variant="determinate"
-                  value={70}
-                  sx={{ color: `${getColorBasedOnTheRatingValue()}` }}
-                />
-                <Box
-                  sx={{
-                    top: 0,
-                    left: 0,
-                    bottom: 0,
-                    right: 0,
-                    position: "absolute",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Typography
-                    variant="caption"
-                    component="div"
-                    color="white"
-                    fontSize="13px"
-                  >
-                    {getRatingInPercentage()}
-                  </Typography>
-                </Box>
-              </Box>
+              <CircularGraphComponent
+                rating={rating}
+                ratingInPercentage={getRatingInPercentage()}
+                ratingColor={getColorBasedOnTheRatingValue()}
+              />
             </Box>
           </Box>
 
-          <CardContent>
+          <CardContent sx={{ height: "100px" }}>
             <Typography
               pt="1em"
               gutterBottom
@@ -97,10 +79,13 @@ const CardComponent = ({ isViewOnHome }) => {
               fontWeight="bold"
               fontSize="14px"
             >
-              The Lord of the Rings: The Rings of Power
+              {data?.title || data?.name}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Sep 01, 2022
+              {moment(
+                data?.["release_date"] || data?.["first_air_date"] || "",
+                "YYYY-MM-DD"
+              ).format("MMM DD, YYYY")}
             </Typography>
           </CardContent>
         </CardActionArea>

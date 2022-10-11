@@ -1,10 +1,29 @@
 import React from "react";
-import { Button, InputBase, InputAdornment, useTheme } from "@mui/material";
+import {
+  InputBase,
+  InputAdornment,
+  useTheme,
+  CircularProgress,
+  Box,
+} from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 
-const SearchField = () => {
+const SearchField = (props) => {
   const theme = useTheme();
+  const {
+    searchValue,
+    searchValueHandler,
+    searchLoading,
+    searchSubmitHandler,
+    isViewedOnHome = true,
+  } = props;
+
+  // console.log(searchLoading);
   return (
     <InputBase
+      value={searchValue}
+      onChange={searchValueHandler}
+      onKeyDown={(e) => searchSubmitHandler(e.key.toString(), "keyPress")}
       placeholder="Search for a movie, tv show, person...."
       fullWidth
       sx={{
@@ -12,44 +31,59 @@ const SearchField = () => {
           backgroundColor: "white",
           paddingLeft: "15px",
           height: "46px",
-          borderRadius: "30px",
+          borderRadius: isViewedOnHome ? "30px" : "0px",
+          borderBottom: `${
+            isViewedOnHome ? "none" : `1px solid ${theme.palette.primary.main}`
+          }`,
         },
         "& label.Mui-focused": {
           color: "none",
         },
         "& .MuiInput-underline:after": {
-          borderBottomColor: "green",
+          borderBottomColor: "black",
         },
         "& .MuiOutlinedInput-root": {
           border: "1px black",
           "& fieldset": {
-            borderColor: "transparent",
+            borderColor: `${isViewedOnHome ? "transparent" : "black"}`,
           },
           "&:hover fieldset": {
-            borderColor: "transparent",
+            borderColor: `${isViewedOnHome ? "transparent" : "black"}`,
           },
           "&.Mui-focused fieldset": {
-            borderColor: "transparent",
+            borderColor: `${isViewedOnHome ? "transparent" : "black"}`,
           },
         },
       }}
       endAdornment={
-        <InputAdornment position="end">
-          <Button
-            sx={{
-              "&.MuiButton-root": {
-                fontWeight: 700,
-                color: "white",
-                borderRadius: "30px",
-                height: "46px",
-                width: "100px",
-                background: `${theme.palette.primary.gradientColor}`,
-              },
-            }}
-          >
-            Search
-          </Button>
-        </InputAdornment>
+        isViewedOnHome ? (
+          <InputAdornment position="end">
+            <LoadingButton
+              onClick={() => searchSubmitHandler(undefined, "buttonClick")}
+              loading={searchLoading}
+              sx={{
+                "&.MuiButton-root": {
+                  fontWeight: 700,
+                  color: "white",
+                  borderRadius: "30px",
+                  height: "46px",
+                  width: "100px",
+                  background: `${theme.palette.primary.gradientColor}`,
+                },
+              }}
+            >
+              {!searchLoading ? "Search" : ""}
+            </LoadingButton>
+          </InputAdornment>
+        ) : (
+          <InputAdornment position="end">
+            {searchLoading && (
+              <Box mr="5px">
+                <CircularProgress size={25} />
+              </Box>
+            )}
+          </InputAdornment>
+        )
       }
     />
   );

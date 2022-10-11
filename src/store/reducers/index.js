@@ -4,7 +4,10 @@ import tvShowsReducer from "./tv-shows.reducer";
 
 import { createStore, compose, applyMiddleware, combineReducers } from "redux";
 import createSagaMiddleware from "@redux-saga/core";
-// import { watcher } from "../Saga/Watchers/Watchers";
+import rootSaga from "../sagas";
+import trendingReducer from "./trending.reducer";
+import searchReducer from "./search.reducer";
+import detailsReducer from "./details.reducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const sagaMiddleWare = createSagaMiddleware();
@@ -14,6 +17,9 @@ const rootReducer = combineReducers({
   movies: moviesReducer,
   people: peopleReducer,
   tvShows: tvShowsReducer,
+  trending: trendingReducer,
+  search: searchReducer,
+  details: detailsReducer,
 });
 
 const store = createStore(
@@ -22,5 +28,5 @@ const store = createStore(
   composeEnhancers(applyMiddleware(...middleWare))
 );
 
-// sagaMiddleWare.run(watcher);
+sagaMiddleWare.run(rootSaga);
 export default store;

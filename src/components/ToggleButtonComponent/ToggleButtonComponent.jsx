@@ -1,15 +1,19 @@
 import React from "react";
 import { ToggleButton, ToggleButtonGroup, useTheme, Box } from "@mui/material";
 
-const ToggleButtonComponent = ({ isMobileView, toggleButtonNames }) => {
+const ToggleButtonComponent = (props) => {
   const theme = useTheme();
-  const [alignment, setAlignment] = React.useState(
-    toggleButtonNames[0]?.toLowerCase()
-  );
 
-  const handleChange = (event, newAlignment) => {
-    console.log(newAlignment);
-    if (newAlignment && alignment !== newAlignment) setAlignment(newAlignment);
+  const {
+    isMobileView,
+    toggleButtonNames,
+    toggleButtonState,
+    toggleButtonHandler,
+    toggleName,
+  } = props;
+
+  const stringRemoveSpacesAndLowerCaseConversion = (stringToConvert) => {
+    return stringToConvert.replace(/\s/g, "").toLowerCase();
   };
   return (
     <Box
@@ -20,9 +24,16 @@ const ToggleButtonComponent = ({ isMobileView, toggleButtonNames }) => {
       <ToggleButtonGroup
         size={isMobileView ? "small" : "medium"}
         color="primary"
-        value={alignment}
+        value={toggleButtonState}
         exclusive
-        onChange={handleChange}
+        onChange={(event) =>
+          toggleButtonHandler(
+            toggleName,
+            stringRemoveSpacesAndLowerCaseConversion(
+              event.target.value.toString()
+            )
+          )
+        }
         aria-label="Platform"
         sx={{
           "& .MuiToggleButtonGroup-grouped": {
@@ -41,7 +52,7 @@ const ToggleButtonComponent = ({ isMobileView, toggleButtonNames }) => {
         {toggleButtonNames?.map((toggleButtonName) => (
           <ToggleButton
             key={toggleButtonName}
-            value={toggleButtonName.toLowerCase()}
+            value={stringRemoveSpacesAndLowerCaseConversion(toggleButtonName)}
             disableRipple
           >
             {toggleButtonName}

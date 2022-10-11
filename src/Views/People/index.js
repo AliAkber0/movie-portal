@@ -1,1 +1,2 @@
-export { default as PeopleContainer } from "./People.container";
+import People from "./People.container";
+export default People;

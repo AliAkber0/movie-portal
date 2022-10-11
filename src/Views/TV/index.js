@@ -1,1 +1,2 @@
-export { default as TVContainer } from "./TV.container";
+import TV from "./TV.container";
+export default TV;

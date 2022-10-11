@@ -1,18 +1,30 @@
-import React from "react";
+import { connect } from "react-redux";
 import TV from "./TV";
-import { useMediaQuery } from "@mui/material";
-import { useParams } from "react-router-dom";
-import { ViewHoc } from "../../ViewHoc";
+import {
+  getAiringTodayTvShowsSelector,
+  getOnAiredTvShowsSelector,
+  getPopularTvShowsSelector,
+  getTopRatedTvShowsSelector,
+} from "../../store/selectors/tvShows.selectors";
+import { tvShowsActions } from "../../store/actions";
 
-function TVContainer() {
-  const { tag } = useParams();
-  const isMobileView = useMediaQuery("(max-width:900px)");
-  console.log(tag);
-  return (
-    <ViewHoc>
-      <TV isMobileView={isMobileView} tag={tag} />
-    </ViewHoc>
-  );
-}
+const mapStateToProps = (state) => {
+  return {
+    popularTvShows: getPopularTvShowsSelector(state),
+    airingTodayTvShows: getAiringTodayTvShowsSelector(state),
+    onAiredTvShows: getOnAiredTvShowsSelector(state),
+    topRatedTvShows: getTopRatedTvShowsSelector(state),
+  };
+};
 
-export default TVContainer;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getPopularTvShows: () => dispatch(tvShowsActions.getPopularTvShows()),
+    getAiringTodayTvShows: () =>
+      dispatch(tvShowsActions.getAiringTodayTvShows()),
+    getTopRatedTvShows: () => dispatch(tvShowsActions.getTopRatedTvShows()),
+    getOnAiredTvShows: () => dispatch(tvShowsActions.getOnAiredTvShows()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TV);

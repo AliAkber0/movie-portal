@@ -3,7 +3,15 @@ import { SearchField } from "../../components/SearchField";
 import HeroImage from "../../assets/IMAGES/HeroBackgroundImage.jpg";
 import { Box, Typography } from "@mui/material";
 
-function HeroSection({ isMobileView, fontColorSx }) {
+function HeroSection(props) {
+  const {
+    isMobileView,
+    fontColorSx,
+    searchValue,
+    searchValueHandler,
+    searchLoading,
+    searchSubmitHandler,
+  } = props;
   return (
     <Box width={isMobileView ? "100vw" : "75vw"}>
       <Box
@@ -25,7 +33,12 @@ function HeroSection({ isMobileView, fontColorSx }) {
           <Typography pb="15px" sx={fontColorSx} variant="h5">
             Millions of movies, TV shows and people to discover. Explore now.
           </Typography>
-          <SearchField />
+          <SearchField
+            searchValue={searchValue}
+            searchValueHandler={searchValueHandler}
+            searchLoading={searchLoading}
+            searchSubmitHandler={searchSubmitHandler}
+          />
         </Box>
       </Box>
     </Box>

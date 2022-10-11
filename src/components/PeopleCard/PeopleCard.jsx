@@ -8,18 +8,29 @@ import {
 } from "@mui/material";
 
 const PeopleCard = (props) => {
+  const { popularPeople, navigateTo } = props;
+
   return (
-    <Card sx={{ maxWidth: 235, boxShadow: "0 2px 8px rgb(0 0 0 / 10%)" }}>
+    <Card
+      onClick={() => navigateTo(popularPeople?.id)}
+      sx={{
+        maxWidth: 235,
+        boxShadow: "0 2px 8px rgb(0 0 0 / 10%)",
+        "&::hover": { cursor: "pointer" },
+      }}
+    >
       <CardActionArea>
         <CardMedia
           component="img"
           height="235"
-          image="https://www.themoviedb.org/t/p/w235_and_h235_face/whNwkEQYWLFJA8ij0WyOOAD5xhQ.jpg"
+          image={`https://www.themoviedb.org/t/p/w235_and_h235_face/${
+            popularPeople?.profile_path || "whNwkEQYWLFJA8ij0WyOOAD5xhQ.jpg"
+          }`}
           alt="Jason Statham"
         />
-        <CardContent>
+        <CardContent sx={{ height: "75px" }}>
           <Typography fontSize="20px" fontWeight="600">
-            Jason Statham
+            {popularPeople?.name}
           </Typography>
           <Typography
             sx={{
@@ -28,7 +39,10 @@ const PeopleCard = (props) => {
             }}
             noWrap
           >
-            Snatch, The Meg, The Fate of the Furious asasas Snatch,
+            {popularPeople?.["known_for"]?.map(
+              (knownFor) =>
+                `${knownFor?.["original_title"] || knownFor?.["name"]}, `
+            )}
           </Typography>
         </CardContent>
       </CardActionArea>

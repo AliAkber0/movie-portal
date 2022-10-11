@@ -1,11 +1,13 @@
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HomeContainer } from "./Views/Home";
+import Movies from "./Views/Movies";
+import React from "react";
 import "./App.css";
-import Movie from "./Views/Movie";
-import { TVContainer } from "./Views/TV";
-import { PeopleContainer } from "./Views/People";
-import DetailContainer from "./Views/Detail/Detail.container";
+import Home from "./Views/Home";
+import Details from "./Views/Details";
+import TV from "./Views/TV";
+import People from "./Views/People";
+import DetailsPeople from "./Views/DetailsPeople";
 
 const theme = createTheme({
   palette: {
@@ -22,15 +24,22 @@ const theme = createTheme({
 });
 
 function App() {
+  // React.useEffect(() => {
+  //   window.scrollTo({
+  //     top: 0,
+  //     behavior: "smooth",
+  //   });
+  // });
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomeContainer />} />
-          <Route path="/detail/:tag/:id" element={<DetailContainer />} />
-          <Route path="/movie/:tag" element={<Movie />} />
-          <Route path="/tv/:tag" element={<TVContainer />} />
-          <Route path="/people/:tag" element={<PeopleContainer />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/details/:tag/:id" element={<Details />} />
+          <Route path="/details/people/:id" element={<DetailsPeople />} />
+          <Route path="/movie/:tag" element={<Movies />} />
+          <Route path="/tv/:tag" element={<TV />} />
+          <Route path="/people/:tag" element={<People />} />
           <Route
             path="*"
             element={<div className="not-found">Page Not Found</div>}

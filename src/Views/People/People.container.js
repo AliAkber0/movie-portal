@@ -1,18 +1,18 @@
-import React from "react";
-import { useMediaQuery } from "@mui/material";
+import { connect } from "react-redux";
+import { peopleActions } from "../../store/actions";
+import { getPopularPeopleSelector } from "../../store/selectors/people.selectors";
 import People from "./People";
-import { useParams } from "react-router-dom";
-import { ViewHoc } from "../../ViewHoc";
 
-function PeopleContainer() {
-  const { tag } = useParams();
-  const isMobileView = useMediaQuery("(max-width:900px)");
-  console.log(tag);
-  return (
-    <ViewHoc>
-      <People isMobileView={isMobileView} tag={tag} />
-    </ViewHoc>
-  );
-}
+const mapStateToProps = (state) => {
+  return {
+    popularPeople: getPopularPeopleSelector(state),
+  };
+};
 
-export default PeopleContainer;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getPopularPeople: () => dispatch(peopleActions.getPopularPeople()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(People);

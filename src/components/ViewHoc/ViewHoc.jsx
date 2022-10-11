@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "@mui/material";
-import { Footer } from "../components/Footer";
-import { NavBar } from "../components/NavBar";
+import { Footer } from "../Footer";
+import { NavBar } from "../NavBar";
 
 const ViewHoc = ({ children }) => {
   return (

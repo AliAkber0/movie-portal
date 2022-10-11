@@ -52,7 +52,6 @@ const DrawerAppBar = (props) => {
   }, [isMobileView]);
 
   const navigateTo = (pathname) => {
-    console.log(pathname);
     navigate(pathname);
   };
 
@@ -181,7 +180,6 @@ const DrawerAppBar = (props) => {
   };
 
   const getMenuState = (menuToHandle) => {
-    // console.log(menuToHandle, "menuToHandle");
     if (menuToHandle === "movies") {
       return openMoviesMenu;
     } else if (menuToHandle === "tvshows") {
@@ -228,7 +226,7 @@ const DrawerAppBar = (props) => {
       })}
     </List>
   );
-  // console.log(mobileOpen, "mobileOpen");
+
   return (
     <Box sx={{ height: { xs: "56px", sm: "64px" } }}>
       <Slide appear={false} direction="down" in={!trigger}>
@@ -267,12 +265,8 @@ const DrawerAppBar = (props) => {
                         sx={{ color: "#fff", ml: "2em", fontWeight: 600 }}
                         disableRipple
                         onMouseEnter={(e) => {
-                          console.log("onMouse Enter");
                           setAnchorEl(e.currentTarget);
                           menuToggleHandler(itemRemoveSpacesAndLowerCase);
-                        }}
-                        onMouseLeave={() => {
-                          console.log("onMouse Out");
                         }}
                       >
                         {item}
